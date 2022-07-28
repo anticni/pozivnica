@@ -51,7 +51,7 @@ export default function App() {
                     }}
                 >
                     <Fireworks
-                        options={{acceleration: 1, opacity: 0.3, traceSpeed: 5, trace: 1}}
+                        options={{acceleration: 1, opacity: 0.3, traceSpeed: 9, trace: 1}}
                         style={{
                             top: 0,
                             left: 0,

@@ -51,8 +51,8 @@ export default function InviteForm(props: IProps) {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         console.log(firstName)
-        // fetch("https://q8s1qo.deta.dev/guests/confirm", {
-        fetch("http://localhost:8000/guests/confirm", {
+        fetch("https://q8s1qo.deta.dev/guests/confirm", {
+        // fetch("http://localhost:8000/guests/confirm", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
