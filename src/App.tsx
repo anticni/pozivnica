@@ -38,7 +38,7 @@ export default function App() {
                 <ParallaxLayer offset={0} speed={0} style={{ backgroundColor: '#253237'}}/>
                 <ParallaxLayer offset={0.6} speed={0.00} style={{backgroundColor: '#253237'}}/>
                 <ParallaxLayer offset={1.2} speed={0} style={{backgroundColor: '#805E73'}}/>
-                <ParallaxLayer offset={1} speed={1} style={{backgroundColor: '#805E73'}}/>
+                <ParallaxLayer offset={1} speed={0.9} style={{backgroundColor: '#805E73'}}/>
                 <ParallaxLayer offset={2} speed={1} style={{backgroundColor: '#87BCDE'}}/>
 
                 <ParallaxLayer
@@ -95,8 +95,8 @@ export default function App() {
                     <img src={"./couple-photo.jpg"} style={{height: '50%', borderRadius: '5%', marginBottom:'15%'}}/>
                 </ParallaxLayer>
 
-                <ParallaxLayer offset={1.3} speed={0.1} style={{pointerEvents: 'none'}}>
-                    <img src={'./ruzmarin.png'} style={{width: '90%', marginLeft:'5%'}} className={'ruzmarin'}/>
+                <ParallaxLayer offset={1.27} speed={0.5} style={{pointerEvents: 'none'}}>
+                    <img src={'./ruzmarin.png'} style={{width: '85%', marginLeft:'5%'}} className={'ruzmarin'}/>
                 </ParallaxLayer>
 
                 <ParallaxLayer offset={1} speed={0.8} style={{opacity: 0.1}}>
@@ -136,7 +136,7 @@ export default function App() {
                 <div style={{background: '#87BCDE'}}>
                 <ParallaxLayer
                     offset={1.1}
-                    speed={0.1}
+                    speed={0.43}
                     onClick={() => parallax.current.scrollTo(2)}
                     style={{
                         display: 'flex',
@@ -153,7 +153,7 @@ export default function App() {
                     </div>
                 </ParallaxLayer>
 
-                <ParallaxLayer offset={1.5} speed={0.1} style={{
+                <ParallaxLayer offset={1.43} speed={0.1} style={{
                     marginLeft:'10%',
                     marginRight:'10%',
                     alignItems: 'center',

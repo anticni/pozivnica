@@ -74,7 +74,7 @@ export default function InviteForm(props: IProps) {
     };
     return (
         <ThemeProvider theme={theme}>
-            <form noValidate onSubmit={handleSubmit}>
+            <form style={{zIndex: "9999"}} noValidate onSubmit={handleSubmit}>
                 <FormControl>
                     <FormLabel component="legend">Upiši
                         se

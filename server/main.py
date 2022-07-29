@@ -44,6 +44,3 @@ def read_user(request: GuestConfirmationRequest, db: Session = Depends(get_db)):
 
 # mount the frontend after the routes so we can use the api also
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
