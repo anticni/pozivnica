@@ -23,4 +23,6 @@ yarn-error.log*
 
 .idea
 .venv
-.vercel
+
+__pycache__
+*pycache
