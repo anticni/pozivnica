@@ -76,7 +76,7 @@ export default function InviteForm(props: IProps) {
                 props.openSnackBar(true);
             } else {
                 props.setSuccess(false);
-                if (!firstName || !lastName) {
+                if (!firstName || firstName.length == 0 || !lastName || lastName.length == 0) {
                     props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
                 } else {
                     props.setSnackBarMessage("Nešto je pošlo po zlu :/")
@@ -85,7 +85,7 @@ export default function InviteForm(props: IProps) {
             }
         }).catch(err => {
             props.setSuccess(false);
-            if (!firstName || !lastName) {
+            if (!firstName || firstName.length == 0 || !lastName || lastName.length == 0) {
                 props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
             } else {
                 props.setSnackBarMessage("Nešto je pošlo po zlu :/")
@@ -119,7 +119,7 @@ export default function InviteForm(props: IProps) {
                 setLastName("");
             } else {
                 props.setSuccess(false);
-                if (!firstName || !lastName) {
+                if (!firstName || firstName.length == 0 || !lastName || lastName.length == 0) {
                     props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
                 } else {
                     props.setSnackBarMessage("Nešto je pošlo po zlu :/")
