@@ -105,7 +105,8 @@ export default function InviteForm(props: IProps) {
             props.setSnackBarMessage("Uspešno si ispalio, ''bravo''")
             props.openSnackBar(true);
             setIspalaDialogOpen(false);
-
+            setFirstName("");
+            setLastName("");
         }).catch(err => {
             props.setSuccess(false);
             if (!firstName || !lastName){
@@ -132,18 +133,17 @@ export default function InviteForm(props: IProps) {
                 <Dialog open={ispalaDialog} onClose={handleIspalaClickClose}>
                     <DialogTitle>Zar si stvarno toliki bednik?!</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            Objasni nam zašto ako jesi
-                        </DialogContentText>
                         <TextField
                             type="text"
                             label="Ime"
+                            fullWidth
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                         />
                         <TextField
                             type="text"
                             label="Prezime"
+                            fullWidth
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                         />
@@ -152,6 +152,7 @@ export default function InviteForm(props: IProps) {
                             id="name"
                             type="text"
                             fullWidth
+                            label="Objasni nam zašto ako jesi"
                             variant="standard"
                             onChange={(e) => setIspalaReason(e.target.value)}
                         />
