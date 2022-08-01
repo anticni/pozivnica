@@ -6,7 +6,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
     FormControl,
     FormControlLabel,
@@ -71,12 +70,14 @@ export default function InviteForm(props: IProps) {
                 guest_last_name: guestLastName
             })
         }).then(r => {
-            props.setSuccess(r.status < 300);
-            props.setSnackBarMessage('Okej, ali javi nam ako ispaljuješ ;)')
-            props.openSnackBar(true);
+            if (r.status < 300) {
+                props.setSuccess(r.status < 300);
+                props.setSnackBarMessage('Okej, ali javi nam ako ispaljuješ ;)')
+                props.openSnackBar(true);
+            }
         }).catch(err => {
             props.setSuccess(false);
-            if (!firstName || !lastName){
+            if (!firstName || !lastName) {
                 props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
             } else {
                 props.setSnackBarMessage("Nešto je pošlo po zlu :/")
@@ -101,15 +102,17 @@ export default function InviteForm(props: IProps) {
                 reject_reason: ispalaReason
             })
         }).then(r => {
-            props.setSuccess(r.status < 300);
-            props.setSnackBarMessage("Uspešno si ispalio, ''bravo''")
-            props.openSnackBar(true);
-            setIspalaDialogOpen(false);
-            setFirstName("");
-            setLastName("");
+            if (r.status < 300) {
+                props.setSuccess(r.status < 300);
+                props.setSnackBarMessage("Uspešno si ispalio, ''bravo''")
+                props.openSnackBar(true);
+                setIspalaDialogOpen(false);
+                setFirstName("");
+                setLastName("");
+            }
         }).catch(err => {
             props.setSuccess(false);
-            if (!firstName || !lastName){
+            if (!firstName || firstName.length == 0 || !lastName || lastName.length == 0) {
                 props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
             } else {
                 props.setSnackBarMessage("Nešto je pošlo po zlu :/")
@@ -207,7 +210,7 @@ export default function InviteForm(props: IProps) {
                     <Button variant="outlined" style={{color: 'lightgray'}} type="submit">POŠALJI</Button>
                     <br/>
                     <Button variant="outlined" style={{color: 'palevioletred'}} onClick={handleIspalaClickOpen}
-                            >ISPALJUJEM</Button>
+                    >ISPALJUJEM</Button>
                 </FormControl>
             </form>
 
