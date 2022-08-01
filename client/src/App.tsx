@@ -7,6 +7,7 @@ import {Alert, LinearProgress, Snackbar, Stack} from "@mui/material";
 export default function App() {
     const parallax = useRef<IParallax>(null!)
     const [snackBarOpen, setSnackBarOpen] = React.useState(false);
+    const [snackBarMessage, setSnackBarMessage] = React.useState("");
     const [isSuccess, setSuccess] = React.useState(false);
 
 
@@ -30,7 +31,7 @@ export default function App() {
                       onClose={handleSnackBarClose}>
                 <Alert onClose={handleSnackBarClose} severity={isSuccess ? "success" : "error"}
                        sx={{width: '100%'}}>
-                    {isSuccess ? 'Okej, ali javi nam ako ispaljuješ ;)' : 'Nešto je pošlo po zlu :/'}
+                    {snackBarMessage ? snackBarMessage : 'Nešto je pošlo po zlu :/'}
                 </Alert>
             </Snackbar>
 
@@ -95,7 +96,7 @@ export default function App() {
                     <img src={"./couple-photo.jpg"} style={{height: '50%', borderRadius: '5%', marginBottom:'15%'}}/>
                 </ParallaxLayer>
 
-                <ParallaxLayer offset={1.27} speed={0.5} style={{pointerEvents: 'none'}}>
+                <ParallaxLayer offset={1.32} speed={0.5} style={{pointerEvents: 'none'}}>
                     <img src={'./ruzmarin.png'} style={{width: '85%', marginLeft:'5%'}} className={'ruzmarin'}/>
                 </ParallaxLayer>
 
@@ -135,8 +136,8 @@ export default function App() {
 
                 <div style={{background: '#87BCDE'}}>
                 <ParallaxLayer
-                    offset={1.1}
-                    speed={0.43}
+                    offset={1.05}
+                    speed={0.6}
                     onClick={() => parallax.current.scrollTo(2)}
                     style={{
                         display: 'flex',
@@ -153,14 +154,14 @@ export default function App() {
                     </div>
                 </ParallaxLayer>
 
-                <ParallaxLayer offset={1.43} speed={0.1} style={{
+                <ParallaxLayer offset={1.43} speed={0.5} style={{
                     marginLeft:'10%',
                     marginRight:'10%',
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontFamily: "'Cormorant SC', serif",color:'lightgray'
                 }}>
-                    <InviteForm setSuccess={setSuccess} openSnackBar={setSnackBarOpen}/>
+                    <InviteForm setSnackBarMessage={setSnackBarMessage} setSuccess={setSuccess} openSnackBar={setSnackBarOpen}/>
                 </ParallaxLayer>
 
                 <ParallaxLayer

@@ -7,7 +7,7 @@ from starlette.staticfiles import StaticFiles
 import crud
 import models
 from database import SessionLocal, engine
-from schemas import GuestConfirmationRequest
+from schemas import GuestConfirmationRequest, GuestRejectionRequest
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -40,6 +40,12 @@ def get_all_guests(db: Session = Depends(get_db)):
 def read_user(request: GuestConfirmationRequest, db: Session = Depends(get_db)):
     crud.confirm_guest(db, request)
     return {"ko_ovo_gleda": "duckator je"}
+
+
+@app.post('/guests/reject')
+def read_user(request: GuestRejectionRequest, db: Session = Depends(get_db)):
+    crud.guest_rejection(db, request)
+    return {"ko_ovo_gleda": "mega duckator je"}
 
 
 # mount the frontend after the routes so we can use the api also

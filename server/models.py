@@ -11,3 +11,4 @@ class Guest(Base):
     last_name = Column(String)
     guest_name = Column(String)
     confirmed = Column(Boolean)
+    reject_reason = Column(String)

@@ -3,6 +3,11 @@ import {Dispatch, SetStateAction} from "react";
 import {
     Button,
     createTheme,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
     FormControl,
     FormControlLabel,
     FormLabel,
@@ -31,13 +36,14 @@ const theme = createTheme({
 interface IProps {
     setSuccess: Dispatch<SetStateAction<boolean>>;
     openSnackBar: Dispatch<SetStateAction<boolean>>;
+    setSnackBarMessage: Dispatch<SetStateAction<string>>;
 }
 
 
 export default function InviteForm(props: IProps) {
-    const vertical = 'bottom';
-    const horizontal = 'center';
     const [checked, setChecked] = React.useState(false);
+    const [ispalaReason, setIspalaReason] = React.useState("");
+    const [ispalaDialog, setIspalaDialogOpen] = React.useState(false);
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
     const [guestFirstName, setGuestFirstName] = React.useState("");
@@ -51,8 +57,8 @@ export default function InviteForm(props: IProps) {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         console.log(firstName)
-        fetch("https://q8s1qo.deta.dev/guests/confirm", {
-        // fetch("http://localhost:8000/guests/confirm", {
+        fetch("https://nrk4nu.deta.dev/guests/confirm", {
+            // fetch("http://localhost:8000/guests/confirm", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -66,14 +72,96 @@ export default function InviteForm(props: IProps) {
             })
         }).then(r => {
             props.setSuccess(r.status < 300);
+            props.setSnackBarMessage('Okej, ali javi nam ako ispaljuješ ;)')
             props.openSnackBar(true);
         }).catch(err => {
             props.setSuccess(false);
+            if (!firstName || !lastName){
+                props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
+            } else {
+                props.setSnackBarMessage("Nešto je pošlo po zlu :/")
+            }
             props.openSnackBar(true);
         });
     };
+
+    const handleIspala = (event: React.FormEvent) => {
+        event.preventDefault();
+        console.log(firstName)
+        fetch("https://nrk4nu.deta.dev/guests/reject", {
+            // fetch("http://localhost:8000/guests/confirm", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                first_name: firstName,
+                last_name: lastName,
+                reject_reason: ispalaReason
+            })
+        }).then(r => {
+            props.setSuccess(r.status < 300);
+            props.setSnackBarMessage("Uspešno si ispalio, ''bravo''")
+            props.openSnackBar(true);
+            setIspalaDialogOpen(false);
+
+        }).catch(err => {
+            props.setSuccess(false);
+            if (!firstName || !lastName){
+                props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
+            } else {
+                props.setSnackBarMessage("Nešto je pošlo po zlu :/")
+            }
+            props.openSnackBar(true);
+        });
+    };
+
+    const handleIspalaClickOpen = (event: React.FormEvent) => {
+        event.preventDefault();
+        setIspalaDialogOpen(true);
+    };
+
+    const handleIspalaClickClose = () => {
+        setIspalaDialogOpen(false);
+    };
+
     return (
         <ThemeProvider theme={theme}>
+            <div>
+                <Dialog open={ispalaDialog} onClose={handleIspalaClickClose}>
+                    <DialogTitle>Zar si stvarno toliki bednik?!</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Objasni nam zašto ako jesi
+                        </DialogContentText>
+                        <TextField
+                            type="text"
+                            label="Ime"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                        <TextField
+                            type="text"
+                            label="Prezime"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            onChange={(e) => setIspalaReason(e.target.value)}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleIspalaClickClose}>Ipak neću</Button>
+                        <Button onClick={handleIspala}>Bedan sam, ispaljujem</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
             <form style={{zIndex: "9999"}} noValidate onSubmit={handleSubmit}>
                 <FormControl>
                     <FormLabel component="legend">Upiši
@@ -114,9 +202,14 @@ export default function InviteForm(props: IProps) {
                         />
                     </>)
                     }
+                    <br/>
                     <Button variant="outlined" style={{color: 'lightgray'}} type="submit">POŠALJI</Button>
+                    <br/>
+                    <Button variant="outlined" style={{color: 'palevioletred'}} onClick={handleIspalaClickOpen}
+                            >ISPALJUJEM</Button>
                 </FormControl>
             </form>
+
         </ThemeProvider>
     );
 }
