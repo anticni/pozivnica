@@ -74,6 +74,14 @@ export default function InviteForm(props: IProps) {
                 props.setSuccess(r.status < 300);
                 props.setSnackBarMessage('Okej, ali javi nam ako ispaljuješ ;)')
                 props.openSnackBar(true);
+            } else {
+                props.setSuccess(false);
+                if (!firstName || !lastName) {
+                    props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
+                } else {
+                    props.setSnackBarMessage("Nešto je pošlo po zlu :/")
+                }
+                props.openSnackBar(true);
             }
         }).catch(err => {
             props.setSuccess(false);
@@ -109,6 +117,14 @@ export default function InviteForm(props: IProps) {
                 setIspalaDialogOpen(false);
                 setFirstName("");
                 setLastName("");
+            } else {
+                props.setSuccess(false);
+                if (!firstName || !lastName) {
+                    props.setSnackBarMessage("Alo! Upiši svoje ime i prezime!!!")
+                } else {
+                    props.setSnackBarMessage("Nešto je pošlo po zlu :/")
+                }
+                props.openSnackBar(true);
             }
         }).catch(err => {
             props.setSuccess(false);
