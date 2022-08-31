@@ -79,7 +79,7 @@ def count_confirmed_guests(db: _Base):
             arrived_guests += 1
         if guest.get("escort_arrived", None):
             arrived_guests += 1
-        if guest.get("escort_name", None):
+        if guest.get("escort_name", "") is not "":
             confirmed_guests += 1
     return {"confirmed_guests": confirmed_guests,
             "arrived_guests": arrived_guests
