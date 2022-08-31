@@ -50,7 +50,7 @@ def guest_rejection(db: _Base, request: GuestRejectionRequest):
     guest = query.items[0]
     updates = {
         "confirmed": False,
-        "reject_reason": request.reject_reason
+        "reject_reason": request.reject_reason if request.reject_reason else ""
     }
     db.update(updates, guest["key"])
 
