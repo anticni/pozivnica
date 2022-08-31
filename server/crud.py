@@ -36,7 +36,7 @@ def confirm_guest(db: _Base, request: GuestConfirmationRequest):
                 "utf-8").replace(" ", "")
         updates[
             "escort_name"] = f'{guest_first_name if guest_first_name else ""} {guest_last_name if guest_last_name else ""}'.strip()
-    db.update(updates, guest.key)
+    db.update(updates, guest["key"])
 
 
 def guest_rejection(db: _Base, request: GuestRejectionRequest):
@@ -52,7 +52,7 @@ def guest_rejection(db: _Base, request: GuestRejectionRequest):
         "confirmed": False,
         "reject_reason": request.reject_reason
     }
-    db.update(updates, guest.key)
+    db.update(updates, guest["key"])
 
 
 def get_confirmed_guests(db: _Base):
