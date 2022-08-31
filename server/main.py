@@ -1,15 +1,16 @@
 import uvicorn
-from fastapi import Depends, FastAPI
+from deta import Deta  # Import Deta
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
 from starlette.staticfiles import StaticFiles
 
 import crud
-import models
-from database import SessionLocal, engine
-from schemas import GuestConfirmationRequest, GuestRejectionRequest
+from schemas import GuestConfirmationRequest, GuestRejectionRequest, GuestArrivalRequest
 
-models.Base.metadata.create_all(bind=engine)
+# Initialize with a Project Key
+deta = Deta("a08nipdj_VoMCWXnP82wpoYtuF2FbVYCPEC5M4jDi")
+# This how to connect to or create a database.
+db = deta.Base("guests")
 
 app = FastAPI()
 
@@ -22,30 +23,37 @@ app.add_middleware(
 )
 
 
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
 @app.get('/guests')
-def get_all_guests(db: Session = Depends(get_db)):
-    return crud.get_guests(db)
+def get_all_guests():
+    return crud.get_all_guests(db)
 
 
 @app.post('/guests/confirm')
-def read_user(request: GuestConfirmationRequest, db: Session = Depends(get_db)):
+def confirm_guest(request: GuestConfirmationRequest):
     crud.confirm_guest(db, request)
     return {"ko_ovo_gleda": "duckator je"}
 
 
 @app.post('/guests/reject')
-def read_user(request: GuestRejectionRequest, db: Session = Depends(get_db)):
+def reject_guest(request: GuestRejectionRequest):
     crud.guest_rejection(db, request)
     return {"ko_ovo_gleda": "mega duckator je"}
+
+
+@app.get('/guests/confirmed')
+def get_confirmed_guests():
+    return crud.get_confirmed_guests(db)
+
+
+@app.post('/guests/arrival')
+def confirm_guest_arrival(request: GuestArrivalRequest):
+    crud.guest_arrived(db, request)
+    return {"response": "OK"}
+
+
+@app.get('/guests/count')
+def count_confirmed_guests():
+    return crud.count_confirmed_guests(db)
 
 
 # mount the frontend after the routes so we can use the api also

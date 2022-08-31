@@ -12,3 +12,7 @@ class GuestRejectionRequest(BaseModel):
     first_name: str
     last_name: str
     reject_reason: str = None
+
+class GuestArrivalRequest(BaseModel):
+    key: str
+    is_escort: bool = False
